@@ -59,6 +59,7 @@ and to nothing else. Nothing is fetched or sent while no session is open.
 | Permission | What it is for |
 |---|---|
 | `INTERNET` | Reaching your machines over SSH, and answering browsers when the web mirror is on |
+| `CAPTURE_KEYBOARD` | Passing Super and the system's other shortcuts to your machine while a session is in front (Android 16 QPR2 and later) |
 
 ## Deleting your data
 

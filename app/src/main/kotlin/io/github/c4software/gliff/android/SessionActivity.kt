@@ -120,12 +120,16 @@ class SessionActivity : ComponentActivity(), KoinComponent {
             ) { viewModel, onClose, tabBar ->
                 DisposableEffect(viewModel) {
                     shown = viewModel
+                    updateKeyboardCapture()
                     viewModel.onShown()
                     title = viewModel.uiState.value.address.ifEmpty { null } ?: title
                     // This session has not been told what the clipboard holds.
                     clipboardSeen = -1L
                     offerClipboard()
-                    onDispose { if (shown === viewModel) shown = null }
+                    onDispose {
+                        if (shown === viewModel) shown = null
+                        updateKeyboardCapture()
+                    }
                 }
                 Tab(viewModel, onClose, tabBar)
             }
@@ -159,6 +163,7 @@ class SessionActivity : ComponentActivity(), KoinComponent {
                     WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
                 }
             }
+            updateKeyboardCapture()
         }
         GliffTheme {
             SessionRoute(
@@ -210,11 +215,27 @@ class SessionActivity : ComponentActivity(), KoinComponent {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
+        updateKeyboardCapture()
         if (hasFocus) {
             leaveDesktopWindow()
             applyImmersion()
             offerClipboard()
         }
+    }
+
+    private var keyboardCaptured = false
+
+    /**
+     * Super and the system's other shortcuts go to the remote only while a
+     * session is on screen in a focused window, lit: not over the machine
+     * list, not while the screen is blacked out for the web mirror, and back
+     * to the device as soon as the window loses the focus.
+     */
+    private fun updateKeyboardCapture() {
+        val wanted = hasWindowFocus() && shown != null && !dark
+        if (wanted == keyboardCaptured) return
+        keyboardCaptured = wanted
+        KeyboardCapture.set(this, wanted)
     }
 
     /** Asked once, when the window first shows: after that the user decides, through its header. */
@@ -254,9 +275,14 @@ class SessionActivity : ComponentActivity(), KoinComponent {
         clipboard.onChange(clipboardChanged)
         getSystemService(InputManager::class.java)?.registerInputDeviceListener(inputDevices, null)
         updateTouchControls()
+        // Back from onStop's release, should the window have kept the focus meanwhile.
+        updateKeyboardCapture()
     }
 
     override fun onStop() {
+        // Given back whatever the focus did, should the window go without losing it first.
+        keyboardCaptured = false
+        KeyboardCapture.set(this, false)
         clipboard.removeOnChange(clipboardChanged)
         getSystemService(InputManager::class.java)?.unregisterInputDeviceListener(inputDevices)
         super.onStop()

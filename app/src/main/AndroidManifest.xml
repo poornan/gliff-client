@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Android 16 QPR2+: lets the session window receive Meta (Super) and other system shortcuts. -->
+    <uses-permission android:name="android.permission.CAPTURE_KEYBOARD" />
 
     <!-- A mouse and a keyboard are welcome, a touchscreen is not required. -->
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />

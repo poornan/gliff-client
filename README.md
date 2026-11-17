@@ -46,7 +46,10 @@ What the client does:
   two-finger pan on the client side, physical mouse.
 - **Keyboard**: on-screen keyboard with a row of extra keys, and physical
   keyboards. Typing uses the remote's own keyboard layout, read over ssh with
-  `hyprctl` and `xkbcli`.
+  `hyprctl` and `xkbcli`. On Android, while a session is in front, Super and
+  the system's other shortcuts (Alt+Tab, Super+Tab) go to the remote, on
+  Android 16 QPR2 and later and on Samsung devices, DeX included; elsewhere
+  the system keeps them.
 - **Clipboard**: text shared both ways.
 - **Options**: resolution (the window's, a usual one or any other, for all machines or for one), keyboard zoom, touch mode, shared clipboard,
   keep screen on.

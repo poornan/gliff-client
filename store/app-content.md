@@ -60,7 +60,11 @@ See [`data-safety.md`](./data-safety.md).
 
 ## Permission declarations with manual review
 
-**None.** The only permission declared is `INTERNET`.
+**None.** The permissions declared are `INTERNET` and `CAPTURE_KEYBOARD`;
+both have the normal protection level and need no declaration form.
+`CAPTURE_KEYBOARD` lets a session window receive Super and the system's other
+shortcuts (Android 16 QPR2 and later) while it is in front, to pass them to
+the remote machine.
 
 Two things to watch on later versions:
 

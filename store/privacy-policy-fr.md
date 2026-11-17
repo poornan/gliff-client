@@ -64,6 +64,7 @@ envoyé quand aucune session n'est ouverte.
 | Permission | À quoi elle sert |
 |---|---|
 | `INTERNET` | Joindre vos machines en SSH, et répondre aux navigateurs quand le miroir web est activé |
+| `CAPTURE_KEYBOARD` | Transmettre Super et les autres raccourcis système à votre machine quand une session est au premier plan (Android 16 QPR2 et ultérieur) |
 
 ## Supprimer vos données
 
