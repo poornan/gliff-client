@@ -25,6 +25,8 @@ data class SessionUiState(
     val keepAwake: Boolean,
     /** Opened from a desktop window, the session is to fill the display. */
     val desktopFullScreen: Boolean = false,
+    /** A physical keyboard's Right Alt is sent as Super. */
+    val rightAltAsSuper: Boolean = false,
     /** A browser watches the web mirror, and this screen is to go dark meanwhile. */
     val darkens: Boolean,
 )
@@ -58,6 +60,7 @@ class SessionViewModel(
         directTouch = options.directTouch,
         keepAwake = options.keepAwake,
         desktopFullScreen = options.desktopFullScreen,
+        rightAltAsSuper = options.rightAltAsSuper,
         darkens = options.httpMirror && options.mirrorDark && watched,
     )
 

@@ -69,6 +69,9 @@ fun SettingsDialog(
                 Toggle(strings.keepAwake, strings.keepAwakeExplain, settings.keepAwake) {
                     onChange(settings.copy(keepAwake = it))
                 }
+                Toggle(strings.rightAltAsSuper, strings.rightAltAsSuperExplain, settings.rightAltAsSuper) {
+                    onChange(settings.copy(rightAltAsSuper = it))
+                }
                 if (desktop) {
                     Toggle(strings.desktopFullScreen, strings.desktopFullScreenExplain, settings.desktopFullScreen) {
                         onChange(settings.copy(desktopFullScreen = it))

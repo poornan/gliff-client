@@ -42,16 +42,17 @@ internal data class SettingsRecord(
     val mirrorDark: Boolean = false,
     val mirrorToken: String = "",
     val desktopFullScreen: Boolean = false,
+    val rightAltAsSuper: Boolean = false,
 ) {
     constructor(settings: Settings) : this(
         settings.forcedWidth, settings.forcedHeight, settings.keyboardZoom, settings.directTouch, settings.clipboard,
         settings.keepAwake, settings.httpMirror, settings.mirrorControl, settings.mirrorDark, settings.mirrorToken,
-        settings.desktopFullScreen,
+        settings.desktopFullScreen, settings.rightAltAsSuper,
     )
 
     fun toSettings() = Settings(
         forcedWidth, forcedHeight, keyboardZoom, directTouch, clipboard,
         keepAwake, httpMirror, mirrorControl, mirrorDark, mirrorToken,
-        desktopFullScreen,
+        desktopFullScreen, rightAltAsSuper,
     )
 }

@@ -317,6 +317,31 @@ class InputTest {
     }
 
     @Test
+    fun rightAltPassesThroughUnlessItStandsForSuper() {
+        keys.raw(Keys.RIGHT_ALT, true)
+        keys.raw(Keys.RIGHT_ALT, false)
+        assertEquals(listOf(ClientMsg.Key(Keys.RIGHT_ALT, true), ClientMsg.Key(Keys.RIGHT_ALT, false)), take())
+
+        keys.rightAltAsSuper = true
+        keys.raw(Keys.RIGHT_ALT, true)
+        keys.raw(Keys.SPACE, true)
+        keys.raw(Keys.SPACE, false)
+        keys.raw(Keys.RIGHT_ALT, false)
+        assertEquals(
+            listOf(
+                ClientMsg.Key(Keys.LEFT_META, true),
+                ClientMsg.Key(Keys.SPACE, true),
+                ClientMsg.Key(Keys.SPACE, false),
+                ClientMsg.Key(Keys.LEFT_META, false),
+            ),
+            take(),
+        )
+        // The left Alt stays Alt.
+        keys.raw(Keys.LEFT_ALT, true)
+        assertEquals(listOf(ClientMsg.Key(Keys.LEFT_ALT, true)), take())
+    }
+
+    @Test
     fun modifiersWrapEachKey() {
         keys.type("c", listOf(Keys.LEFT_CTRL))
         assertEquals(

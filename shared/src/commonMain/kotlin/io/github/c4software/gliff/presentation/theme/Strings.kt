@@ -76,6 +76,8 @@ interface Strings {
     val clipboard: String
     val clipboardExplain: String
     val keepAwakeExplain: String
+    val rightAltAsSuper: String
+    val rightAltAsSuperExplain: String
     val desktopFullScreen: String
     val desktopFullScreenExplain: String
 }
@@ -155,6 +157,8 @@ object English : Strings {
     override val clipboardExplain = "Text copied here can be pasted on the remote, and text copied there lands on this device's clipboard."
     override val keepAwake = "Keep the screen on"
     override val keepAwakeExplain = "The device does not go to sleep while a session is on screen."
+    override val rightAltAsSuper = "Right Alt as Super"
+    override val rightAltAsSuperExplain = "A keyboard's Right Alt is sent as Super, for the shortcuts Samsung DeX and other desktop modes keep from apps. AltGr is then unavailable."
     override val desktopFullScreen = "Full screen on a desktop"
     override val desktopFullScreenExplain = "A machine opened from a desktop window takes the whole display. Its header gives the window back."
     override val mirrorControl = "Control from the browser"
@@ -238,6 +242,8 @@ object French : Strings {
     override val clipboardExplain = "Le texte copié ici se colle sur la machine distante, et le texte copié là-bas arrive dans le presse-papiers de cet appareil."
     override val keepAwake = "Désactiver la veille"
     override val keepAwakeExplain = "L'appareil ne se met pas en veille tant qu'une session est à l'écran."
+    override val rightAltAsSuper = "Alt droite comme Super"
+    override val rightAltAsSuperExplain = "La touche Alt droite d'un clavier est envoyée comme Super, pour les raccourcis que Samsung DeX et les autres modes bureau gardent pour eux. AltGr n'est alors plus disponible."
     override val desktopFullScreen = "Plein écran sur un bureau"
     override val desktopFullScreenExplain = "Une machine ouverte depuis une fenêtre de bureau prend tout l'écran. Son en-tête la remet en fenêtre."
     override val mirrorControl = "Contrôle depuis le navigateur"

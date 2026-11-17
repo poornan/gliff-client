@@ -22,6 +22,7 @@ object Keys {
     const val PAGE_DOWN = 109
     const val INSERT = 110
     const val DELETE = 111
+    const val RIGHT_ALT = 100
     const val LEFT_META = 125
 
     const val BTN_LEFT = 0x110
@@ -34,6 +35,13 @@ object Keys {
  * remote's own when it could be read, the server's US default otherwise.
  */
 class Keyboard(private val layout: () -> KeyLayout = { KeyLayout.US }, private val send: (ClientMsg) -> Unit) {
+    /**
+     * A physical Right Alt goes out as Super: on Samsung DeX and other
+     * desktop modes the system keeps Super for itself, and this gives the
+     * remote's Super shortcuts a key that always reaches the app.
+     */
+    var rightAltAsSuper = false
+
     /**
      * Type `text` with `modifiers` (evdev codes) held around each character.
      * Returns how many characters had no key.
@@ -80,8 +88,9 @@ class Keyboard(private val layout: () -> KeyLayout = { KeyLayout.US }, private v
         modifiers.reversed().forEach { send(ClientMsg.Key(it, false)) }
     }
 
-    /** A key of a physical keyboard, passed through as it is. */
-    fun raw(code: Int, pressed: Boolean) = send(ClientMsg.Key(code, pressed))
+    /** A key of a physical keyboard, passed through as it is, Right Alt aside when it stands for Super. */
+    fun raw(code: Int, pressed: Boolean) =
+        send(ClientMsg.Key(if (rightAltAsSuper && code == Keys.RIGHT_ALT) Keys.LEFT_META else code, pressed))
 
     private companion object {
         /** What to type for what a phone keyboard puts in place of a plain character, on a layout without it. */

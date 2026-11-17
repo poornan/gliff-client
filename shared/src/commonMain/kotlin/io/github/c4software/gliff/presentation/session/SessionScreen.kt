@@ -160,6 +160,7 @@ fun SessionRoute(
         onLandscape = onLandscape,
         touchControls = touchControls,
         directTouch = ui.directTouch,
+        rightAltAsSuper = ui.rightAltAsSuper,
         layout = viewModel::layout,
         send = viewModel::send,
         keyboard = { shown, sink -> SoftKeyboard(shown, sink) },
@@ -189,6 +190,8 @@ fun SessionContent(
     onLandscape: (Boolean) -> Unit = {},
     touchControls: Boolean = true,
     directTouch: Boolean = true,
+    /** A physical keyboard's Right Alt is sent as Super. */
+    rightAltAsSuper: Boolean = false,
     layout: () -> KeyLayout = { KeyLayout.US },
     send: (ClientMsg) -> Unit = {},
     keyboard: @Composable (shown: Boolean, sink: KeySink) -> Unit = { _, _ -> },
@@ -210,6 +213,7 @@ fun SessionContent(
     val trackpad = remember(slop) { Trackpad(slop) { sender.value(it) } }
     val layoutNow = rememberUpdatedState(layout)
     val keys = remember { Keyboard({ layoutNow.value() }) { sender.value(it) } }
+    keys.rightAltAsSuper = rightAltAsSuper
     var pointer by remember { mutableStateOf(Offset(0.5f, 0.5f)) }
     var area by remember { mutableStateOf(IntSize.Zero) }
     // A tap clicks where it lands; off, the screen is a trackpad instead.

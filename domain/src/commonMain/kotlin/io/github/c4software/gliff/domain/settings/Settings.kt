@@ -26,6 +26,8 @@ data class Settings(
     val mirrorToken: String = "",
     /** A session opened from a desktop window leaves it for the whole display. */
     val desktopFullScreen: Boolean = false,
+    /** A physical keyboard's Right Alt is sent as Super, which desktop modes keep for themselves. */
+    val rightAltAsSuper: Boolean = false,
 ) {
     /**
      * The resolution the remote is held to, null when it follows the window.
